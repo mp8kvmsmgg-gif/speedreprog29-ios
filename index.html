@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111111">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="SPEEDREPROG29">
+<title>SPEEDREPROG29 TDI POWER</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101014;color:white;font-family:Arial,sans-serif}
+header{background:#1d1d24;border-bottom:3px solid #e52939;padding:24px 16px;text-align:center}
+h1{color:#ff3449;font-size:28px;margin:0}
+main{padding:16px;max-width:700px;margin:auto}
+section{background:#202028;padding:18px;border-radius:14px;margin-bottom:15px}
+button{background:#e52939;color:white;border:0;padding:13px;border-radius:9px;font-weight:bold;margin:6px 0}
+input{width:100%;padding:12px;margin:10px 0}
+small,p{color:#bfc1ca}
+pre{white-space:pre-wrap;word-break:break-all;color:#ff8893}
+</style>
+</head>
+<body>
+<header><h1>⚡ SPEEDREPROG29</h1><b>TDI POWER — iOS</b></header>
+<main>
+<section>
+<h2>OUVRIR BIN</h2>
+<input type="file" id="file">
+<p id="info">Aucun fichier sélectionné</p>
+<button onclick="analyse()">ANALYSER BIN</button>
+</section>
+<section>
+<h2>ANALYSE LOCALE</h2>
+<p id="result">Charge un fichier pour commencer.</p>
+<pre id="hex"></pre>
+</section>
+<section>
+<h2>MAP FINDER</h2>
+<p>Prototype en lecture seule. Identification turbo, injection et couple non disponible sans définitions ECU vérifiées.</p>
+</section>
+</main>
+<script>
+let data;
+document.getElementById('file').onchange=async e=>{
+const f=e.target.files[0];if(!f)return;
+data=new Uint8Array(await f.arrayBuffer());
+document.getElementById('info').textContent=f.name+' — '+data.length+' octets';
+document.getElementById('result').textContent='Fichier chargé.';
+};
+function analyse(){
+if(!data){alert('Choisis un fichier BIN');return}
+document.getElementById('result').textContent='Taille : '+data.length+' octets. Aperçu hexadécimal :';
+document.getElementById('hex').textContent=Array.from(data.slice(0,256),x=>x.toString(16).padStart(2,'0')).join(' ');
+}
+</script>
+</body>
+</html>
